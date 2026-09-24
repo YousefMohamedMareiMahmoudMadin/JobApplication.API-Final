@@ -1,0 +1,89 @@
+@JobApplication.API_HostAddress = http://localhost:5018
+
+@recruiterToken = PASTE_RECRUITER_TOKEN_HERE
+
+@candidateToken = PASTE_CANDIDATE_TOKEN_HERE
+
+### Register recruiter
+POST {{JobApplication.API_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Recruiter One",
+  "email": "recruiter@test.com",
+  "password": "P@ssw0rd123",
+  "role": "Recruiter"
+}
+
+### Login recruiter
+POST {{JobApplication.API_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "recruiter@test.com",
+  "password": "P@ssw0rd123"
+}
+
+### Register candidate
+POST {{JobApplication.API_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Candidate One",
+  "email": "candidate@test.com",
+  "password": "P@ssw0rd123",
+  "role": "Candidate",
+  "cvUrl": "https://drive.example.com/cv.pdf"
+}
+
+### Login candidate
+POST {{JobApplication.API_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "candidate@test.com",
+  "password": "P@ssw0rd123"
+}
+
+### Create job
+POST {{JobApplication.API_HostAddress}}/api/jobs
+Authorization: Bearer {{recruiterToken}}
+Content-Type: application/json
+
+{
+  "title": "Backend Developer",
+  "description": "ASP.NET Core Web API developer"
+}
+
+### Get all jobs
+GET {{JobApplication.API_HostAddress}}/api/jobs
+
+### Get job by id
+GET {{JobApplication.API_HostAddress}}/api/jobs/1
+
+### Apply for job
+POST {{JobApplication.API_HostAddress}}/api/JobCandidateApplications
+Content-Type: application/json
+
+{
+  "jobId": 1,
+  "candidateId": 1
+}
+
+### Get all applications
+GET {{JobApplication.API_HostAddress}}/api/JobCandidateApplications
+
+### Get application by id
+GET {{JobApplication.API_HostAddress}}/api/JobCandidateApplications/1
+
+### Update application status
+PATCH {{JobApplication.API_HostAddress}}/api/JobCandidateApplications/1/UnderReview
+
+### Cancel application
+DELETE {{JobApplication.API_HostAddress}}/api/JobCandidateApplications/1?requesterId=1
+
+### Close job
+PUT {{JobApplication.API_HostAddress}}/api/jobs/1/close
+Authorization: Bearer {{recruiterToken}}
+
+###
